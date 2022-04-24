@@ -50,7 +50,7 @@ function App() {
         <div>
           <Routes>
             {/* <Route exact path="/" element={<Home isVisible={isVisible} domRef={domRef} />} /> */}
-            <Route exact path="/" element={<Home />} />
+            <Route exact path="/photo-iris-react/" element={<Home />} />
             <Route exact path="/blog" element={<Blog />} />
             <Route path="/sessions" element={<Sessions />} />
             <Route path="/gallery" element={<Gallery />} />
