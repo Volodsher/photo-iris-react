@@ -1,8 +1,6 @@
 // import './Header.css';
 import PropTypes from 'prop-types';
-import {
-  NavLink
-} from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 import styles from './Header.module.scss';
 import HamburgerButton from '../HamburgerButton/HamburgerButton';
 import logo from '../../logo-iris-photo.png';
@@ -11,40 +9,34 @@ import logo from '../../logo-iris-photo.png';
 
 function Header(props) {
   let activeStyle = {
-    color: "#E98074"
-  }
+    color: '#E98074',
+  };
   return (
     <div className={styles.header}>
       <div className={styles.toCenterLogo} />
       <ul className={`${styles.menuList} ${styles.menuListFirst}`}>
-        <li key='1'>
+        <li key="1">
           <NavLink
-            to="/"
-            style={({ isActive }) => 
-              isActive ? activeStyle : undefined
-            }
+            to="/photo-iris-react/"
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
             end
           >
-              Home
+            Home
           </NavLink>
         </li>
-        <li key='2'>
+        <li key="2">
           <NavLink
-            to="/blog"
-            style={({ isActive }) => 
-              isActive ? activeStyle : undefined
-            }
+            to="/photo-iris-react/blog"
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
             end
           >
             Blog
           </NavLink>
         </li>
-        <li key='3'>
+        <li key="3">
           <NavLink
-            to="/sessions"
-            style={({ isActive }) => 
-              isActive ? activeStyle : undefined
-            }
+            to="/photo-iris-react/sessions"
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
             end
           >
             Sessions
@@ -53,34 +45,28 @@ function Header(props) {
       </ul>
       <img src={logo} className={styles.logo} alt="logo" />
       <ul className={`${styles.menuList} ${styles.menuListSecond}`}>
-        <li key='4'>
+        <li key="4">
           <NavLink
-            to="/gallery"
-            style={({ isActive }) => 
-              isActive ? activeStyle : undefined
-            }
+            to="/photo-iris-react/gallery"
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
             end
           >
             Gallery
           </NavLink>
         </li>
-        <li key='5'>
+        <li key="5">
           <NavLink
-            to="/inspiration"
-            style={({ isActive }) => 
-              isActive ? activeStyle : undefined
-            }
+            to="/photo-iris-react/inspiration"
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
             end
           >
             Inspiration
           </NavLink>
         </li>
-        <li key='6'>
+        <li key="6">
           <NavLink
-            to="/contact"
-            style={({ isActive }) => 
-              isActive ? activeStyle : undefined
-            }
+            to="/photo-iris-react/contact"
+            style={({ isActive }) => (isActive ? activeStyle : undefined)}
             end
           >
             Contact
@@ -91,34 +77,44 @@ function Header(props) {
         menuOpen={props.menuOpen}
         changeMenuStatus={props.changeMenuStatus}
       />
-      <div className={props.menuOpen ? `${styles.sideMenu} ${styles.sideMenuOpen}` : styles.sideMenu}>
+      <div
+        className={
+          props.menuOpen
+            ? `${styles.sideMenu} ${styles.sideMenuOpen}`
+            : styles.sideMenu
+        }
+      >
         <ul className={styles.menuList}>
-          <li key='1' onClick={props.changeMenuStatus}>
-            <NavLink to="/">Home</NavLink>
+          <li key="1" onClick={props.changeMenuStatus}>
+            <NavLink to="/photo-iris-react/">Home</NavLink>
           </li>
-          <li key='2' onClick={props.changeMenuStatus}>
-            <NavLink to="/blog">Blog</NavLink>
+          <li key="2" onClick={props.changeMenuStatus}>
+            <NavLink to="/photo-iris-react/blog">Blog</NavLink>
           </li>
-          <li key='3' onClick={props.changeMenuStatus}>
-            <NavLink to="/sessions">Sessions</NavLink>
+          <li key="3" onClick={props.changeMenuStatus}>
+            <NavLink to="/photo-iris-react/sessions">Sessions</NavLink>
           </li>
-          <li key='4' onClick={props.changeMenuStatus}>
-            <NavLink to="/gallery">Gallery</NavLink>
+          <li key="4" onClick={props.changeMenuStatus}>
+            <NavLink to="/photo-iris-react/gallery">Gallery</NavLink>
           </li>
-          <li key='5' onClick={props.changeMenuStatus}>
-            <NavLink to="/inspiration">Inspiration</NavLink>
+          <li key="5" onClick={props.changeMenuStatus}>
+            <NavLink to="/photo-iris-react/inspiration">Inspiration</NavLink>
           </li>
-          <li key='6' onClick={props.changeMenuStatus}>
-            <NavLink to="/contact">Contact</NavLink>
+          <li key="6" onClick={props.changeMenuStatus}>
+            <NavLink to="/photo-iris-react/contact">Contact</NavLink>
           </li>
         </ul>
       </div>
       <div
-        className={props.menuOpen ? `${styles.shadow} ${styles.shadowOpen}` : styles.shadow}
+        className={
+          props.menuOpen
+            ? `${styles.shadow} ${styles.shadowOpen}`
+            : styles.shadow
+        }
         onClick={props.changeMenuStatus}
       />
     </div>
-  )
+  );
 }
 
 export default Header;
@@ -126,4 +122,4 @@ export default Header;
 Header.propTypes = {
   menuOpen: PropTypes.bool,
   changeMenuStatus: PropTypes.func,
-}
+};
