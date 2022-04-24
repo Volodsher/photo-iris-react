@@ -51,11 +51,14 @@ function App() {
           <Routes>
             {/* <Route exact path="/" element={<Home isVisible={isVisible} domRef={domRef} />} /> */}
             <Route exact path="/photo-iris-react/" element={<Home />} />
-            <Route exact path="/blog" element={<Blog />} />
-            <Route path="/sessions" element={<Sessions />} />
-            <Route path="/gallery" element={<Gallery />} />
-            <Route path="/inspiration" element={<Inspiration />} />
-            <Route path="/contact" element={<Contact />} />
+            <Route exact path="/photo-iris-react/blog" element={<Blog />} />
+            <Route path="/photo-iris-react/sessions" element={<Sessions />} />
+            <Route path="/photo-iris-react/gallery" element={<Gallery />} />
+            <Route
+              path="/photo-iris-react/inspiration"
+              element={<Inspiration />}
+            />
+            <Route path="/photo-iris-react/contact" element={<Contact />} />
           </Routes>
         </div>
         <Footer />
