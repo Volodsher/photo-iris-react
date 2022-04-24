@@ -21,7 +21,7 @@ export default function Slideshow() {
 
   return (
     <>
-      <img src="photo-iris-react/slides/1.jpg" alt="first-slide" />
+      <img src="/photo-iris-react/slides/1.jpg" alt="first-slide" />
       <div
         style={{
           whiteSpace: 'nowrap',
