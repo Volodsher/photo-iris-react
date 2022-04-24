@@ -21,7 +21,7 @@ export default function Slideshow() {
 
   return (
     <>
-      <img src="/photo-iris-react/slides/1.jpg" alt="first-slide" />
+      {/* <img src="/photo-iris-react/slides/1.jpg" alt="first-slide" /> */}
       <div
         style={{
           whiteSpace: 'nowrap',
@@ -30,13 +30,15 @@ export default function Slideshow() {
         <img
           key={id}
           className={styles.slide}
-          src={`/slides/${counter}.jpg`}
+          src={`/photo-iris-react/slides/${counter}.jpg`}
           alt="first-slide"
         />
         <img
           key={id + 1}
           className={`${styles.slide} ${styles.second}`}
-          src={`/slides/${counter === 6 ? 1 : counter + 1}.jpg`}
+          src={`/photo-iris-react/slides/${
+            counter === 6 ? 1 : counter + 1
+          }.jpg`}
           alt="second-slide"
         />
       </div>
