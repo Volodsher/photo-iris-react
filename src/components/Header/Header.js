@@ -1,11 +1,8 @@
-// import './Header.css';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import styles from './Header.module.scss';
 import HamburgerButton from '../HamburgerButton/HamburgerButton';
 import logo from '../../logo-iris-photo.png';
-
-//<NavLink to="/" activeStyle={{color: "#E98074"}} exact>Home</NavLink>
 
 function Header(props) {
   let activeStyle = {
