@@ -36,3 +36,31 @@
     transform: rotate(360deg);
   }
 } */
+
+.global-shortExplanation {
+  font-family: 'Tajawal', sans-serif;
+  color: white;
+  font-size: 34px;
+}
+
+.global-shortExplanation2 {
+  font-family: 'PT Sans', sans-serif;
+  color: #484747;
+  font-size: 17px;
+  font-weight: bold;
+  margin: 30px 0;
+}
+
+@media (max-width: 860px)  {
+  .global-shortExplanation {
+    font-size: 27px;
+  }
+  
+  .global-shortExplanation2 {
+    font-family: 'PT Sans', sans-serif;
+    color: #484747;
+    font-size: 17px;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+}

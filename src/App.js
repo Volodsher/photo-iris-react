@@ -11,10 +11,10 @@ import Contact from './components/Contact/Contact';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import styles from './App.module.scss';
+import './App.css';
 
 function App() {
   const [menuOpen, toOpenMenu] = useState(false);
-
   const changeMenuStatus = () => {
     toOpenMenu(!menuOpen);
   };
