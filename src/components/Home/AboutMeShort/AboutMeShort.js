@@ -61,10 +61,10 @@ export default function AboutMeShort(props) {
           Iryna Sheremeta
         </h1>
         <p>
-          This is something about me and what I love to do when I want to do it
-          So take a seat and relax if you have time. But I belive that you
-          actuly have that beautiful and dreamfool time. So lets go to speak a
-          bit. I&apos;me a photographer of a big field of bright life.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat.
         </p>
         <MyButton
           className={styles.aboutMeButton}
