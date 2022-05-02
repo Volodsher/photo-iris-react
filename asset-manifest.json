@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/photo-iris-react/static/css/main.66a0e757.css",
-    "main.js": "/photo-iris-react/static/js/main.8efce7cf.js",
+    "main.js": "/photo-iris-react/static/js/main.c270f6ff.js",
     "static/js/787.20cd23c4.chunk.js": "/photo-iris-react/static/js/787.20cd23c4.chunk.js",
     "static/media/portret.jpg": "/photo-iris-react/static/media/portret.60959c08a12c2ce08b84.jpg",
     "static/media/logo-iris-photo.png": "/photo-iris-react/static/media/logo-iris-photo.9d93f3861b40648e5440.png",
@@ -9,11 +9,11 @@
     "static/media/insta.png": "/photo-iris-react/static/media/insta.1e040c245fba14ea4f20.png",
     "index.html": "/photo-iris-react/index.html",
     "main.66a0e757.css.map": "/photo-iris-react/static/css/main.66a0e757.css.map",
-    "main.8efce7cf.js.map": "/photo-iris-react/static/js/main.8efce7cf.js.map",
+    "main.c270f6ff.js.map": "/photo-iris-react/static/js/main.c270f6ff.js.map",
     "787.20cd23c4.chunk.js.map": "/photo-iris-react/static/js/787.20cd23c4.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.66a0e757.css",
-    "static/js/main.8efce7cf.js"
+    "static/js/main.c270f6ff.js"
   ]
 }
