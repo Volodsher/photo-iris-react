@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/photo-iris-react/static/css/main.3a60c76d.css",
-    "main.js": "/photo-iris-react/static/js/main.70e42067.js",
+    "main.css": "/photo-iris-react/static/css/main.9ddc7c0b.css",
+    "main.js": "/photo-iris-react/static/js/main.0abf6624.js",
     "static/js/787.20cd23c4.chunk.js": "/photo-iris-react/static/js/787.20cd23c4.chunk.js",
     "static/media/chan8.jpg": "/photo-iris-react/static/media/chan8.fb14feb200837c0e5bd0.jpg",
     "static/media/chan4.jpg": "/photo-iris-react/static/media/chan4.4ebcaa663011d3124d76.jpg",
@@ -20,12 +20,12 @@
     "static/media/Editar1.jpg": "/photo-iris-react/static/media/Editar1.c251209d588dd4041a68.jpg",
     "static/media/insta.png": "/photo-iris-react/static/media/insta.1e040c245fba14ea4f20.png",
     "index.html": "/photo-iris-react/index.html",
-    "main.3a60c76d.css.map": "/photo-iris-react/static/css/main.3a60c76d.css.map",
-    "main.70e42067.js.map": "/photo-iris-react/static/js/main.70e42067.js.map",
+    "main.9ddc7c0b.css.map": "/photo-iris-react/static/css/main.9ddc7c0b.css.map",
+    "main.0abf6624.js.map": "/photo-iris-react/static/js/main.0abf6624.js.map",
     "787.20cd23c4.chunk.js.map": "/photo-iris-react/static/js/787.20cd23c4.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.3a60c76d.css",
-    "static/js/main.70e42067.js"
+    "static/css/main.9ddc7c0b.css",
+    "static/js/main.0abf6624.js"
   ]
 }
