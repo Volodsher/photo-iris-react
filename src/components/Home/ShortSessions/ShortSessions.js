@@ -2,6 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import MyButton from '../../MyButton/MyButton';
 import styles from './ShortSessions.module.scss';
 import one from '../../../images/shortGallery/Editar1.jpg';
+import portrait from '../../../images/sessions/port2.jpg';
+import family from '../../../images/sessions/fam15.jpg';
+import inthemoment from '../../../images/sessions/int1.jpg';
+import charm from '../../../images/sessions/chan9.jpg';
 
 export default function ShortSession() {
   const history = useNavigate();
@@ -20,7 +24,7 @@ export default function ShortSession() {
       <div className={styles.sessionGrid}>
         <div>
           <img
-            src={one}
+            src={portrait}
             className={styles.shortSessionImg}
             alt="one of short session"
           />
@@ -28,7 +32,7 @@ export default function ShortSession() {
         </div>
         <div style={{}}>
           <img
-            src={one}
+            src={family}
             className={styles.shortSessionImg}
             alt="one of short session"
           />
@@ -36,7 +40,7 @@ export default function ShortSession() {
         </div>
         <div style={{}}>
           <img
-            src={one}
+            src={inthemoment}
             className={styles.shortSessionImg}
             alt="one of short session"
           />
@@ -44,7 +48,7 @@ export default function ShortSession() {
         </div>
         <div style={{}}>
           <img
-            src={one}
+            src={charm}
             className={styles.shortSessionImg}
             alt="one of short session"
           />
