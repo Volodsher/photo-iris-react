@@ -17,6 +17,7 @@ export default function Slideshow() {
   return (
     <>
       <div
+        className={styles.slideShow}
         style={{
           whiteSpace: 'nowrap',
         }}
