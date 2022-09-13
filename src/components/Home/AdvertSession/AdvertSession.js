@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import MyButton from '../../MyButton/MyButton';
+import MyButton from '../../layout/MyButton/MyButton';
 import styles from './AdvertSession.module.scss';
 import backShort from '../../../images/shortGallery/Editar1.jpg';
 
@@ -23,7 +23,7 @@ export default function AdvertSession() {
       <p className="global-shortExplanation">Choose your photo session.</p>
       <MyButton
         className={styles.shortSessionButton}
-        name="Sessions"
+        value="Sessions"
         handleCklick={handleCklick}
         borderColor="white"
       />

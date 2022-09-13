@@ -9,6 +9,7 @@ export default function Home(props) {
     <div style={{ marginBottom: 100 }}>
       <Slideshow />
       <div
+        // className={styles.Home}
         style={{
           margin: 'auto',
           padding: '40px 60px',

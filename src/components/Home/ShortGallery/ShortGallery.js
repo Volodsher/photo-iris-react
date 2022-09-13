@@ -1,6 +1,6 @@
 import styles from './ShortGallery.module.scss';
 import { useNavigate } from 'react-router-dom';
-import MyButton from '../../MyButton/MyButton';
+import MyButton from '../../layout/MyButton/MyButton';
 
 import { v4 as uuidv4 } from 'uuid';
 import one from '../../../images/shortGallery/fam10.jpg';
@@ -37,7 +37,7 @@ export default function ShortGallery() {
       <div className={styles.imageGrid}>{newGal}</div>
       <MyButton
         className={styles.shortGalleryButton}
-        name="More photos"
+        value="More photos"
         handleCklick={handleCklick}
         borderColor="#8E8D8A"
       />

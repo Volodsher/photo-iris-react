@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MyButton from '../../MyButton/MyButton';
+import MyButton from '../../layout/MyButton/MyButton';
 import styles from './AboutMeShort.module.scss';
 import portret from '../../../images/portret.jpg';
 
@@ -42,7 +42,6 @@ export default function AboutMeShort(props) {
         src={portret}
         alt="Iryna's portret"
         ref={containerRef}
-        //ref={domRef}
       />
       <div
         style={{
@@ -69,7 +68,7 @@ export default function AboutMeShort(props) {
         <MyButton
           className={styles.aboutMeButton}
           borderColor="#8E8D8A"
-          name="About me"
+          value="About me"
           handleCklick={handleCklick}
         />
       </div>
