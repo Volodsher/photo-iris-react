@@ -12,6 +12,7 @@ import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import NotFound from './components/layout/NotFound';
 import Login from './components/auth/Login';
+import Post from './components/Blog/Post';
 import styles from './App.module.scss';
 import setAuthToken from './utils/setAuthToken';
 import { loadUser } from './features/authSlice';
@@ -48,6 +49,7 @@ function App() {
               element={<Inspiration />}
             />
             <Route path="/photo-iris-react/contact" element={<Contact />} />
+            <Route path="/photo-iris-react/posts/:id" element={<Post />} />
             <Route path="/photo-iris-react/vhid" element={<Login />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
