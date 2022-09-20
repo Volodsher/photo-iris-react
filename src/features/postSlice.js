@@ -40,9 +40,15 @@ const postSlice = createSlice({
         loading: false,
       };
     },
+    // DELETE_POST
+    deletePost: (state, { payload }) => {
+      return {
+        ...state,
+        posts: state.posts.filter((post) => post._id !== payload),
+      };
+    },
     // POST_ERROR,
     // UPDATE_LIKES,
-    // DELETE_POST,
     // ADD_POST
     // ADD_COMMENT,
     // REMOVE_COMMENT,
@@ -93,12 +99,25 @@ export const getPostAction = createAsyncThunk(
       // console.log(res.data);
       thunkApi.dispatch(getPost(res.data));
     } catch (error) {
-      console.log('this is er');
-      console.log(error.message);
+      console.error(error.message);
     }
   }
 );
 
-export const { getPosts, getPost, addPost } = postSlice.actions;
+export const deletePostAction = createAsyncThunk(
+  'post/deletepost',
+  async (id, { dispatch }) => {
+    console.log(id);
+    try {
+      const res = await axios.delete(`/api/posts/${id}`);
+      dispatch(deletePost(id));
+    } catch (error) {
+      console.log(id);
+      console.error(error.message);
+    }
+  }
+);
+
+export const { getPosts, getPost, addPost, deletePost } = postSlice.actions;
 
 export default postSlice.reducer;

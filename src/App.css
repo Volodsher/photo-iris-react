@@ -1,6 +1,9 @@
 /* Variables */
 :root {
   --primary-color: #D8C3A5;
+  --primary-light:#e2d4c0;
+  --red-dark-color: hsl(360, 67%, 44%);
+  --red-light-color: hsl(360, 71%, 66%);
   --dark-gray: #484747;
   --gray: #52514f;
   --light-gray: #8E8D8A;
@@ -8,6 +11,10 @@
   --light-color: #fff;
   --danger-color: ;
   --success-color: ;
+  --white-color: #fff;
+  --radius: 0.25rem;
+  --spacing: 0.25rem;
+  --transition: all 0.3s linear;
 
 }
 /* background: var(--clr-primary); */
@@ -154,6 +161,11 @@ button {
               transform 150ms ease;
   -webkit-appearance: none;
   -moz-appearance: none;
+  text-transform: uppercase;
+  transition: var(--transition);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  /* font-weight: 700; */
+  /* letter-spacing: var(--spacing); */
 }
 
 /* button:hover,

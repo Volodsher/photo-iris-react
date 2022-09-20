@@ -11,8 +11,6 @@ const initialState = {
   user: null,
 };
 
-//
-
 // Login User
 const authSlice = createSlice({
   name: 'auth',

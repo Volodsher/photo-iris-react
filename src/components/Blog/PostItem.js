@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-
 import Moment from 'react-moment';
 import styles from './Blog.module.scss';
+import { openConfirm } from '../../features/confirmSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faThumbsUp,
@@ -11,6 +11,8 @@ import {
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import PostForm from './PostForm';
+import { useDispatch, useSelector } from 'react-redux';
+import { deletePostAction } from '../../features/postSlice';
 
 const PostItem = ({
   // addLike,
@@ -22,6 +24,9 @@ const PostItem = ({
 }) => {
   const dotIndex = text.indexOf('.');
   const firstSentence = text.slice(0, dotIndex);
+  const dispatch = useDispatch();
+  const { isAuthenticated, user } = useSelector((store) => store.auth);
+  // console.log(_id);
 
   return (
     <div className={`${styles.post} bg-white p-1 my-1`}>
@@ -37,6 +42,12 @@ const PostItem = ({
         <Link to={`/photo-iris-react/posts/${_id}`} className="btn btn-primary">
           Read more{' '}
         </Link>
+        {isAuthenticated && user.status === 'superuser' && (
+          <button onClick={() => dispatch(openConfirm(_id))} name="delete">
+            {' '}
+            delete
+          </button>
+        )}
       </div>
     </div>
   );
