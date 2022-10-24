@@ -40,23 +40,36 @@ const postSlice = createSlice({
         loading: false,
       };
     },
+    // UPDATE_POST
+    updatePost: (state, { payload }) => {
+      return {
+        ...state,
+        // posts: [...state.posts, payload],
+        posts: state.posts.map((post) => {
+          if (post._id === payload._id) return payload;
+          return post;
+        }),
+        //arr.splice(index, 1, 'z');
+        loading: false,
+        post: payload,
+      };
+    },
     // DELETE_POST
     deletePost: (state, { payload }) => {
       return {
         ...state,
         posts: state.posts.filter((post) => post._id !== payload),
+        post: null,
       };
     },
     // POST_ERROR,
     // UPDATE_LIKES,
-    // ADD_POST
     // ADD_COMMENT,
     // REMOVE_COMMENT,
   },
 });
 
-// Get posts
-
+// Get all posts
 export const getPostsAction = createAsyncThunk(
   'post/getposts',
   async (_, thunkApi) => {
@@ -71,6 +84,7 @@ export const getPostsAction = createAsyncThunk(
   }
 );
 
+// Add post
 export const addPostAction = createAsyncThunk(
   'post/addPost',
   async (payload, { dispatch }) => {
@@ -91,6 +105,28 @@ export const addPostAction = createAsyncThunk(
   }
 );
 
+// Update post
+export const updatePostAction = createAsyncThunk(
+  'post/updatePost',
+  async (payload, { dispatch }) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    try {
+      const res = await axios.put(`/api/posts/${payload._id}`, payload, config);
+      dispatch(updatePost(res.data));
+      console.log(res);
+    } catch (error) {
+      console.log(payload);
+      console.log(error.message);
+    }
+  }
+);
+
+//Get one post
 export const getPostAction = createAsyncThunk(
   'post/getpost',
   async ({ id }, thunkApi) => {
@@ -104,20 +140,22 @@ export const getPostAction = createAsyncThunk(
   }
 );
 
+// Delete post
 export const deletePostAction = createAsyncThunk(
   'post/deletepost',
-  async (id, { dispatch }) => {
-    console.log(id);
+  async ({ _id }, { dispatch }) => {
+    console.log(_id);
     try {
-      const res = await axios.delete(`/api/posts/${id}`);
-      dispatch(deletePost(id));
+      const res = await axios.delete(`/api/posts/${_id}`);
+      dispatch(deletePost(_id));
     } catch (error) {
-      console.log(id);
+      console.log(_id);
       console.error(error.message);
     }
   }
 );
 
-export const { getPosts, getPost, addPost, deletePost } = postSlice.actions;
+export const { getPosts, getPost, addPost, updatePost, deletePost } =
+  postSlice.actions;
 
 export default postSlice.reducer;

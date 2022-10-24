@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isOpen: false,
-  payload: null,
+  confirmAction: null,
 };
 
 const confirmSlice = createSlice({
@@ -11,11 +11,11 @@ const confirmSlice = createSlice({
   reducers: {
     openConfirm: (state, action) => {
       state.isOpen = true;
-      state.payload = action.payload;
+      state.confirmAction = action.payload;
     },
     closeConfirm: (state, action) => {
       state.isOpen = false;
-      state.payload = null;
+      state.confirmAction = null;
     },
   },
 });
