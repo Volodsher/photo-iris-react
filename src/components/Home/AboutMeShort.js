@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import MyButton from '../layout/MyButton/MyButton';
 import styles from './Home.module.scss';
-import portret from '../../images/portret.jpg';
+import portrait from '../../images/portrait.jpg';
 
 export default function AboutMeShort(props) {
   const [isVisible, setIsVisible] = useState(false);
@@ -36,8 +36,8 @@ export default function AboutMeShort(props) {
           className={`${styles.aboutMeImage} ${
             isVisible ? styles.isVisible : ''
           }`}
-          src={portret}
-          alt="Iryna's portret"
+          src={portrait}
+          alt="Iryna's portrait"
           ref={containerRef}
         />
         <div className={styles.abutMeTextDiv}>
@@ -49,16 +49,18 @@ export default function AboutMeShort(props) {
             Iryna Sheremeta
           </h1>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
+            Hello! My name is Iryna and I’m in love with photography. I would
+            like to share this love with you by creating beautiful images of
+            your life’s precious moments. I strive to make my photography
+            sessions fun, friendly and cozy so that you truly enjoy the
+            photoshoot itself and look forward to seeing the beauty we create
+            together. If it resonates with you, feel free to chat;)
           </p>
-          <Link to="/photo-iris-react/blog">
+          <Link to="/contact">
             <MyButton
               className={styles.aboutMeButton}
               borderColor="--gray-light"
-              value="My Blog"
+              value="Contact"
             />
           </Link>
         </div>

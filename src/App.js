@@ -7,7 +7,7 @@ import Home from './components/Home/Home';
 import Blog from './components/Blog/Blog';
 import Sessions from './components/Sessions/Sessions';
 import Gallery from './components/Gallery/Gallery';
-import Inspiration from './components/Inspiration/Inspiration';
+// import Inspiration from './components/Inspiration/Inspiration';
 import Contact from './components/Contact/Contact';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
@@ -15,10 +15,12 @@ import NotFound from './components/layout/NotFound';
 import Login from './components/auth/Login';
 import Post from './components/Blog/Post';
 import PostForm from './components/Blog/PostForm';
-// import styles from './App.module.scss';
+import Pricing from './components/Pricing/Pricing';
 import setAuthToken from './utils/setAuthToken';
+import ScrollButton from './components/layout/ScrollButton';
 import { loadUser } from './features/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -43,24 +45,19 @@ function App() {
         <Header menuOpen={menuOpen} changeMenuStatus={changeMenuStatus} />
         <main className="main">
           <Routes>
-            <Route exact path="/photo-iris-react/" element={<Home />} />
-            <Route exact path="/photo-iris-react/blog" element={<Blog />} />
-            <Route path="/photo-iris-react/sessions" element={<Sessions />} />
-            <Route path="/photo-iris-react/gallery" element={<Gallery />} />
-            <Route
-              path="/photo-iris-react/inspiration"
-              element={<Inspiration />}
-            />
-            <Route path="/photo-iris-react/contact" element={<Contact />} />
-            <Route path="/photo-iris-react/posts/:id" element={<Post />} />
-            <Route path="/photo-iris-react/vhid" element={<Login />} />
-            <Route
-              path="/photo-iris-react/posts/postForm"
-              element={<PostForm />}
-            />
+            <Route exact path="/" element={<Home />} />
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/contact" element={<Contact />} />
+            {/* <Route exact path="/blog" element={<Blog />} /> */}
+            {/* <Route path="/sessions" element={<Sessions />} /> */}
+            <Route path="/posts/:id" element={<Post />} />
+            <Route path="/vhid" element={<Login />} />
+            <Route path="/posts/postForm" element={<PostForm />} />
+            <Route path="/pricing" element={<Pricing />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
+        <ScrollButton />
         <Footer />
       </div>
     </Router>
