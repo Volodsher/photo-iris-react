@@ -1,18 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import styles from './Gallery.module.scss';
 import Spinner from '../layout/Spinner';
 import Picture from '../layout/Picture';
 import MyButton from '../layout/MyButton/MyButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCamera,
-  faXmark,
-  faRectangleVerticalHistory,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default function Gallery() {
-  const [sessions, setSessions] = useState([]);
+  const { sessions, loading } = useSelector((store) => store.session);
   const [oneImage, setOneImage] = useState('');
   const [divHeight, setDivHeight] = useState(0);
   const [openSMGallery, setOpenSMGallery] = useState(false);
@@ -42,29 +39,20 @@ export default function Gallery() {
   }, [galleryRef]);
 
   useEffect(() => {
-    const fetchSessions = async () => {
-      try {
-        const response = await fetch('/api/gallery/');
-        const data = await response.json();
-        setSessions(data);
-      } catch (error) {
-        console.error(error.message);
-      }
-    };
-    fetchSessions();
-  }, []);
-
-  useEffect(() => {
     if (sessions.length > 0) {
       const scroll = (id) => {
         const section = document.querySelector(`#${id}`);
         section.scrollIntoView({ behavior: 'smooth', block: 'start' });
       };
-      if (sessions.length > 0 && window.location.href.split('#').length === 2) {
+      if (
+        !loading &&
+        sessions.length > 0 &&
+        window.location.href.split('#').length === 2
+      ) {
         scroll(window.location.href.split('#')[1]);
       }
     }
-  }, [sessions, divHeight, location]);
+  }, [sessions, divHeight, location, loading]);
 
   return (
     <div
@@ -85,16 +73,12 @@ export default function Gallery() {
           style={{
             display: 'lfex',
             color: 'var(--primary-color)',
-            // backgroundColor: 'white',
             borderRadius: '1rem',
-            // opacity: '0.5',
             backgroundColor: 'rgba(255, 255, 255, 0.6)',
             boxShadow: 'none',
           }}
         >
           <FontAwesomeIcon icon={faCamera} size="2x" />
-          {/* <FontAwesomeIcon icon={['fas', 'rectangle-vertical-history']} />
-          <FontAwesomeIcon icon="fa-solid fa-rectangle-vertical-history" /> */}
           <p style={{ marginBottom: '0', marginTop: '-7px' }}>sessions</p>
         </button>
       </div>
@@ -120,7 +104,7 @@ export default function Gallery() {
               if (el.title !== '') {
                 return (
                   <li key={el.id} onClick={openMenuGallery}>
-                    <Link to={`/gallery#${el.id}`}>{el.title}</Link>
+                    <Link to={`/mygallery#${el.id}`}>{el.title}</Link>
                   </li>
                 );
               }
@@ -159,7 +143,7 @@ export default function Gallery() {
               })}
             </div>
             {session.last && (
-              <Link to={session.link}>
+              <Link to={session.priceLink}>
                 <MyButton borderColor="--gray-light" value="Book" />
               </Link>
             )}
