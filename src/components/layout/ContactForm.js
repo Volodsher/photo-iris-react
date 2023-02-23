@@ -101,7 +101,7 @@ function ContactForm(props) {
           style={{ margin: '0.5rem 0' }}
         >
           <option value="Family Fun">Family Fun</option>
-          <option value="Kids' Celebrations">Kids' Celebrations</option>
+          <option value="Kids' Adventures">Kids' Celebrations</option>
           <option value="Love Story">Love Story</option>
           <option value="Maternity">Maternity</option>
           <option value="Portrait">Portrait</option>
