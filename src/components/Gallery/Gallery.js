@@ -48,7 +48,6 @@ export default function Gallery() {
       const scroll = (id) => {
         const section = document.querySelector(`#${id}`);
         section.scrollIntoView({ block: 'start' });
-        // section.scrollIntoView({ behavior: 'smooth', block: 'start' });
       };
       if (
         !loading &&
@@ -66,20 +65,19 @@ export default function Gallery() {
       className={styles.gallery}
       style={{ paddingBottom: '3rem' }}
     >
-      {oneImage && (
+      {oneImage !== '' && (
         <FontAwesomeIcon
-          // color="gray"
           style={{
             position: 'fixed',
             zIndex: '102',
-            color: 'var(--primary-color)',
+            color: 'var(--red-light)',
             cursor: 'pointer',
             top: '1rem',
             right: '1rem',
           }}
           icon={faXmark}
           size="xl"
-          onClick={toggleOneImage}
+          onClick={() => toggleOneImage('')}
         />
       )}
       <div

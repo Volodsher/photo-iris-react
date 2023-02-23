@@ -34,7 +34,7 @@ export default function AdvertSession() {
       <Link to="/mygallery">
         <MyButton
           className={styles.advertSession}
-          value="Sessions"
+          value="Book"
           borderColor="--gray-dark"
         />
       </Link>
