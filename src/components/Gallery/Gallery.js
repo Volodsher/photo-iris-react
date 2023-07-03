@@ -9,30 +9,61 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 export default function Gallery() {
+  const [screenSize, setScreenSize] = useState('.jpg');
   const { sessions, loading } = useSelector((store) => store.session);
+  const [newSessions, setNewSessions] = useState([]);
   const [oneImageUrl, setOneImageUrl] = useState('');
   const [oneImage, setOneImage] = useState('');
   const [divHeight, setDivHeight] = useState(0);
   const [openSMGallery, setOpenSMGallery] = useState(false);
   const galleryRef = useRef();
-
   const location = useLocation();
 
-  const openMenuGallery = () => {
-    setOpenSMGallery(!openSMGallery);
-  };
+  const openMenuGallery = () => setOpenSMGallery(!openSMGallery);
+  const toggleOneImage = (id) => setOneImage(id);
+  const handleCleaarOneImageUrl = () => setOneImageUrl('');
 
   const handleOneImageUrl = (imageUrl) => {
-    setOneImageUrl(imageUrl);
+    const bigImageArr = imageUrl
+      .split(/[-.]/g)
+      .filter((imeg, ind) => ind % 2 === 0);
+
+    let imageSize = '';
+    switch (screenSize) {
+      case '200.jpg':
+        imageSize = '350';
+        break;
+      case '350.jpg':
+        imageSize = '450';
+        break;
+      case '450.jpg':
+        imageSize = '';
+        break;
+      default:
+        imageSize = '';
+    }
+    const bigImageUrl = bigImageArr[0] + '-' + imageSize + '.' + bigImageArr[1];
+    setOneImageUrl(bigImageUrl);
   };
 
-  const toggleOneImage = (id) => {
-    setOneImage(id);
-  };
+  useEffect(() => {
+    const updateDimension = () => {
+      const realScreenSize = window.innerWidth;
+      setScreenSize(
+        realScreenSize < 600
+          ? '200.jpg'
+          : realScreenSize < 800
+          ? '350.jpg'
+          : realScreenSize < 1280
+          ? '450.jpg'
+          : '.jpg'
+      );
+    };
 
-  const handleCleaarOneImageUrl = () => {
-    setOneImageUrl('');
-  };
+    updateDimension();
+    window.addEventListener('resize', updateDimension);
+    return () => window.removeEventListener('resize', updateDimension);
+  }, []);
 
   useEffect(() => {
     const observer = new ResizeObserver(() => {
@@ -44,20 +75,42 @@ export default function Gallery() {
   }, [galleryRef]);
 
   useEffect(() => {
-    if (sessions.length > 0) {
+    if (newSessions.length > 0) {
       const scroll = (id) => {
         const section = document.querySelector(`#${id}`);
+
         section.scrollIntoView({ block: 'start' });
       };
       if (
         !loading &&
-        sessions.length > 0 &&
+        newSessions.length > 0 &&
         window.location.href.split('#').length === 2
       ) {
         scroll(window.location.href.split('#')[1]);
       }
     }
-  }, [sessions, divHeight, location, loading]);
+  }, [newSessions, divHeight, location, loading]);
+
+  useEffect(() => {
+    if (window.location.href.includes('#')) {
+      const requestedSessions = sessions.filter((ses) => {
+        return (
+          ses.name.substring(0, 3) ===
+          window.location.href.split('#')[1].substring(0, 3)
+        );
+      });
+
+      const restSessions = sessions.filter((ses) => {
+        return (
+          ses.name.substring(0, 3) !==
+          window.location.href.split('#')[1].substring(0, 3)
+        );
+      });
+      setNewSessions([...requestedSessions, ...restSessions]);
+    } else {
+      setNewSessions(sessions);
+    }
+  }, [sessions]);
 
   return (
     <div
@@ -70,7 +123,7 @@ export default function Gallery() {
           style={{
             position: 'fixed',
             zIndex: '102',
-            color: 'var(--red-light)',
+            color: 'var(--primary-color)',
             cursor: 'pointer',
             top: '1rem',
             right: '1rem',
@@ -124,7 +177,7 @@ export default function Gallery() {
               if (el.title !== '') {
                 return (
                   <li key={el.id} onClick={openMenuGallery}>
-                    <Link to={`/mygallery#${el.id}`}>{el.title}</Link>
+                    <Link to={`/mygallery#${el.name}`}>{el.title}</Link>
                   </li>
                 );
               }
@@ -135,37 +188,40 @@ export default function Gallery() {
           <FontAwesomeIcon style={{ cursor: 'pointer' }} icon={faXmark} />
         </div>
       </div>
-      {sessions.length === 0 ? (
+      {newSessions.length === 0 ? (
         <Spinner />
       ) : (
-        sessions.map((session) => (
-          <div key={session.id} id={session.id}>
+        newSessions.map((session) => (
+          <div key={session.id} id={session.name}>
             <h1 style={{ margin: '3rem 0' }}>{session.title}</h1>
             <div key={session.id} className={styles.galleryImagesBox}>
-              {session.images?.map((image, ind) => {
-                return [
-                  <img
-                    key={ind}
-                    src={`/gallery/${session.id}/${image}`}
-                    className={styles.galleryImage}
-                    onClick={() => {
-                      handleOneImageUrl(`/gallery/${session.id}/${image}`);
-                      toggleOneImage(`${session.id}${image}`);
-                    }}
-                    alt={`one of ${session.title} session photo`}
-                  />,
-                  oneImage === `${session.id}${image}` && (
-                    <Picture
-                      key={session.id}
-                      clearPicture={handleCleaarOneImageUrl}
-                      picture={oneImageUrl}
-                      toggleOneImage={toggleOneImage}
-                    />
-                  ),
-                ];
-              })}
+              {session.images
+                ?.filter((img) => img.split('-')[1] === screenSize)
+                .map((image, ind) => {
+                  return [
+                    <img
+                      key={ind}
+                      src={`/gallery/${session.name}/${image}`}
+                      className={styles.galleryImage}
+                      onClick={() => {
+                        handleOneImageUrl(`/gallery/${session.name}/${image}`);
+
+                        toggleOneImage(`${session.name}${image}`);
+                      }}
+                      alt={`one of ${session.title} session photo`}
+                    />,
+                    oneImage === `${session.name}${image}` && (
+                      <Picture
+                        key={session.id}
+                        clearPicture={handleCleaarOneImageUrl}
+                        picture={oneImageUrl}
+                        toggleOneImage={toggleOneImage}
+                      />
+                    ),
+                  ];
+                })}
             </div>
-            {session.last && (
+            {session.last === 1 && (
               <Link to={session.priceLink}>
                 <MyButton borderColor="--gray-light" value="Book" />
               </Link>

@@ -20,13 +20,6 @@ const Post = (props) => {
   const { id } = useParams();
   const payload = { id };
   const dispatch = useDispatch();
-  let _id = null;
-  let title = null;
-
-  if (post !== null) {
-    _id = post._id;
-    title = post.title;
-  }
 
   useEffect(() => {
     dispatch(getPostAction(payload));
@@ -36,7 +29,7 @@ const Post = (props) => {
     setIsOpen(!isOpen);
     dispatch(deletePostAction(deletePostData));
     setDeletePostData(null);
-    console.log('Post is deleted');
+    console.log('Post is deleted from Post page');
   };
 
   const postPayload = (postData) => {
@@ -47,14 +40,14 @@ const Post = (props) => {
     setIsOpen(!isOpen);
   };
 
-  return loading || post === null ? (
+  return loading === true || post === null ? (
     <Spinner />
   ) : (
     <div className={styles.postContainer}>
       {isOpen && (
         <NewConfirm
           action={toDeletePost}
-          link="/blog"
+          link="/posts"
           toggleConfirm={toggleConfirm}
           confirmName="Do you really want to delete this post"
           isOpen={isOpen}
@@ -62,10 +55,10 @@ const Post = (props) => {
         />
       )}
       <div className={styles.postButtons}>
-        <Link to="/blog" className={styles.postLink}>
+        <Link to="/posts" className={styles.postLink}>
           <MyButton value="All Posts" className={styles.postButton} />
         </Link>
-        {isAuthenticated && user.status === 'superuser' && (
+        {isAuthenticated && user.status === 'author' && (
           <Fragment>
             <Link to="/posts/postForm" state={{ ...post }}>
               <MyButton value="Edit" className={styles.postButton} />
@@ -74,8 +67,8 @@ const Post = (props) => {
               value="Delete"
               className={styles.postButton}
               // handleCklick={() => dispatch(openConfirm({ _id, title }))}
-              handleCklick={() => {
-                postPayload({ _id, title });
+              handleClick={() => {
+                postPayload(post);
                 toggleConfirm();
               }}
             />
@@ -89,10 +82,11 @@ const Post = (props) => {
       <p>{post.text}</p>
       {post.image && (
         <img
-          src={`/blog/${post.image}`}
+          src={`/posts/${post.image}`}
           style={{ maxWidth: '100%', height: 'auto' }}
         />
       )}
+      <p>{post.image}</p>
     </div>
   );
 };

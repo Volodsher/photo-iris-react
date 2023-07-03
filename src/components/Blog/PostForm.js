@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './Blog.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,90 +7,152 @@ import { addPostAction, updatePostAction } from '../../features/postSlice';
 import { useLocation } from 'react-router';
 import MyButton from '../layout/MyButton/MyButton';
 import Confirm from '../layout/Confirm';
+import ErrorMessage from '../layout/ErrorMessage';
+// import { uuid } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
-const PostForm = () => {
+const PostForm = ({ posts }) => {
   const { isOpen, payload } = useSelector((store) => store.confirm);
   const dispatch = useDispatch();
+  const fileInputRef = useRef(null);
 
+  const [newError, setNewError] = useState('');
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
-  const [image, setImage] = useState();
+  const [image, setImage] = useState('');
   const [prevImage, setPrevImage] = useState();
   const [imageUrl, setImageUrl] = useState();
-  const [_id, setId] = useState();
+  const [id, setId] = useState();
   const [url, setUrl] = useState('');
   const [selectedFile, setSelectedFile] = useState();
-  const [isFilePicked, setIsFilePicked] = useState();
+  const [fileIsPicked, setFileIsPicked] = useState(false);
   const [deleteImage, setDeleteImage] = useState(5);
 
   const navigate = useNavigate();
   const location = useLocation();
-  const fromPost = location.state;
+  const fromPost = location.state ? location.state : null;
 
   useEffect(() => {
     if (fromPost !== null) {
       setTitle(fromPost.title);
       setText(fromPost.text);
-      setId(fromPost._id);
+      setId(fromPost.id);
       setImage(fromPost.image);
       setPrevImage(fromPost.image);
     }
   }, []);
 
+  const handleFileChange = (event) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const fileSizeInBytes = file.size;
+      const maxSizeInBytes = 1024 * 1024; // 1MB
+
+      if (fileSizeInBytes > maxSizeInBytes) {
+        setImage('');
+        setSelectedFile(undefined);
+        setImageUrl('');
+        setFileIsPicked(false);
+        fileInputRef.current.value = null;
+        return setNewError(
+          'File size exceeds the maximum allowed size in 1 MB'
+        );
+      }
+      setNewError(''); // to delete an error from previous choice if there is one
+      setImage(file.name);
+      setSelectedFile(file);
+      setImageUrl(URL.createObjectURL(file));
+      setFileIsPicked(true);
+    } else {
+      setImage('');
+      setSelectedFile(undefined);
+      setImageUrl('');
+      setFileIsPicked(false);
+      setNewError('');
+    }
+  };
+
   const handleSubmission = async (event) => {
     event.preventDefault();
-    const formData = new FormData();
-    formData.append('file', selectedFile);
 
+    const formData = new FormData();
+
+    console.log('from my formpos', selectedFile);
     if (fromPost !== null) {
-      dispatch(updatePostAction({ _id, title, text, image }));
-      navigate(`/posts/${_id}`);
+      dispatch(
+        updatePostAction({ date: fromPost.date, id, title, text, image })
+      );
+      navigate(`/posts/${id}`);
     } else {
-      dispatch(addPostAction({ title, text, image }));
+      formData.append('title', title);
+      formData.append('text', text);
+      if (image && posts.filter((post) => image === post.image)) {
+        console.log(posts.filter((post) => image === post.image));
+        const changeNamePart = uuidv4().slice(0, 10);
+        const newImageName = changeNamePart + image;
+        console.log('here we have this picture', newImageName);
+        formData.append('image', newImageName);
+      } else {
+        console.log('here we do not have');
+        formData.append('image', image);
+      }
+      formData.append('file', selectedFile);
+
+      // formData.append('image', image);
+      dispatch(addPostAction(formData));
+      // dispatch(addPostAction({ title, text, image }));
     }
     setTitle('');
     setText('');
     setImage('');
     setPrevImage('');
     setImageUrl('');
-    setSelectedFile('');
+    setSelectedFile(undefined);
+    setFileIsPicked(false);
+    setNewError('');
 
-    if (image && prevImage === undefined) {
-      await axios
-        .post('/api/photo-blog', formData)
-        .then((res) => {
-          console.log('Success:', res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else if (image && prevImage !== image) {
-      await axios
-        .post('/api/photo-blog', formData)
-        .then((res) => {
-          console.log('Success:', res);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+    fileInputRef.current.value = null;
+    // if (image && prevImage === undefined) {
+    //   await axios
+    //     .post('/api/photo-blog', formData)
+    //     .then((res) => {
+    //       // console.log('Success:', res);
+    //       console.log('Success:');
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // } else if (image && prevImage !== image) {
+    //   await axios
+    //     .post('/api/photo-blog', formData)
+    //     .then((res) => {
+    //       console.log('Success:', res);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // }
   };
 
-  useEffect(() => {
-    if (selectedFile === undefined) {
-      setIsFilePicked(false);
-    } else {
-      setIsFilePicked(true);
-    }
-  }, [selectedFile]);
+  // useEffect(() => {
+  //   if (selectedFile === undefined) {
+  //     setFileIsPicked(false);
+  //     console.log('this is selected file', fileIsPicked);
+  //   } else {
+  //     setFileIsPicked(true);
+  //     console.log('this is selected file', fileIsPicked);
+  //   }
+  // }, [selectedFile]);
 
   const deletePostAction = () => {
-    setImage(null);
-    setPrevImage(null);
-    setIsFilePicked(null);
+    setImage('');
+    setPrevImage();
+    setFileIsPicked();
     setSelectedFile('');
-    setImageUrl(null);
+    setImageUrl('');
+
+    fileInputRef.current.value = null;
   };
 
   return (
@@ -134,7 +196,7 @@ const PostForm = () => {
           <Fragment>
             <p>old name {image}</p>
             <img
-              src={`/blog/${prevImage}`}
+              src={`/posts/${prevImage}`}
               // src={imageUrl}
               style={{ margin: '2rem 0', maxWidth: '100%', height: 'auto' }}
             />
@@ -143,14 +205,10 @@ const PostForm = () => {
         <input
           type="file"
           name="file"
-          onChange={(event) => {
-            if (event.target.files.length !== 0) {
-              setSelectedFile(event.target.files[0]);
-              setImageUrl(URL.createObjectURL(event.target.files[0]));
-              setImage(event.target.files[0].name);
-            }
-          }}
+          ref={fileInputRef}
+          onChange={handleFileChange}
         />
+        {newError && <ErrorMessage errMessage={newError} />}
         {image && (
           <button
             type="button"
@@ -159,7 +217,7 @@ const PostForm = () => {
             Delete image
           </button>
         )}
-        {isFilePicked ? (
+        {fileIsPicked ? (
           <div>
             <p>Filename: {selectedFile.name}</p>
             <p>
@@ -173,6 +231,7 @@ const PostForm = () => {
         )}
         <MyButton type="submit" value="Submit" borderColor="--gray-light" />
       </form>
+      <p>{image}</p>
     </div>
   );
 };

@@ -17,6 +17,7 @@ function Book(props) {
           session={props.session}
           handleClick={props.handleClick}
           handleCancel={props.handleCancel}
+          xmark={true}
         />
       </div>
     </aside>
@@ -24,7 +25,7 @@ function Book(props) {
 }
 
 Book.propTypes = {
-  session: PropTypes.array,
+  session: PropTypes.string,
   handleClick: PropTypes.func,
   handleCancel: PropTypes.func,
 };

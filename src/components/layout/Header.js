@@ -20,11 +20,10 @@ function Header(props) {
       <div
         key="2"
         style={{
-          // postion: 'fixed',
           display: 'flex',
           justifyContent: 'center',
           gap: '5rem',
-          marginBottom: '-3rem',
+          marginBottom: '-2.5rem',
           padding: '0 1rem',
           lineHeight: '0.8',
         }}
@@ -35,7 +34,6 @@ function Header(props) {
       <div className={styles.header}>
         <div className={styles.toCenterLogo} />
         <ul className={`${styles.menuList} ${styles.menuListFirst}`}>
-          {/* <ul> */}
           <li key="1">
             <NavLink
               to="/"
@@ -68,15 +66,15 @@ function Header(props) {
               Pricing
             </NavLink>
           </li>
-          {/* <li key="4">
-          <NavLink
-            to="/blog"
-            style={({ isActive }) => (isActive ? activeStyle : undefined)}
-            end
-          >
-            Blog
-          </NavLink>
-        </li> */}
+          <li key="4">
+            <NavLink
+              to="/posts"
+              style={({ isActive }) => (isActive ? activeStyle : undefined)}
+              end
+            >
+              Blog
+            </NavLink>
+          </li>
           <li
             key="5"
             style={{
@@ -142,14 +140,11 @@ function Header(props) {
               <NavLink to="/pricing">Pricing</NavLink>
             </li>
             <li key="4" onClick={props.changeMenuStatus}>
+              <NavLink to="/posts">Blog</NavLink>
+            </li>
+            <li key="5" onClick={props.changeMenuStatus}>
               <NavLink to="/contact">Contact</NavLink>
             </li>
-            {/* <li key="5" onClick={props.changeMenuStatus}>
-            <NavLink to="/inspiration">Inspiration</NavLink>
-          </li> */}
-            {/* <li key="6" onClick={props.changeMenuStatus}>
-            <NavLink to="/contact">Contact</NavLink>
-          </li> */}
           </ul>
         </div>
         <div

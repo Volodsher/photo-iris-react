@@ -16,6 +16,7 @@ export default function Blog() {
   const { isAuthenticated, user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
 
+  console.log(deletePostData);
   useEffect(() => {
     if (posts.length === 0) dispatch(getPostsAction());
   }, []);
@@ -24,14 +25,16 @@ export default function Blog() {
     setIsOpen(!isOpen);
     dispatch(deletePostAction(deletePostData));
     setDeletePostData(null);
+    console.log('this is deletePostData', deletePostData);
+    console.log('Post is deleted from Blog page');
 
-    if (deletePostData.image !== undefined) {
-      const req = async () =>
-        console.log('we should delete this image' + deletePostData.image);
-      axios.delete(`/api/photo-blog/${deletePostData.image}`);
-    } else {
-      console.log('could not find image');
-    }
+    // if (deletePostData.image !== undefined) {
+    //   const req = async () =>
+    //     console.log('we should delete this image' + deletePostData.image);
+    //   axios.delete(`/api/photo-blog/${deletePostData.image}`);
+    // } else {
+    //   console.log('could not find image');
+    // }
 
     console.log('Post is deleted');
   };
@@ -58,8 +61,9 @@ export default function Blog() {
         />
       )}
       <h1>Wellcome to my blog</h1>
-      <p>Here I tell some intresting stores about photography</p>
-      {isAuthenticated && user.status === 'superuser' && <PostForm />}
+      {isAuthenticated && user.status === 'author' && (
+        <PostForm posts={posts} />
+      )}
       {loading === true ? (
         <Spinner />
       ) : (
@@ -69,7 +73,7 @@ export default function Blog() {
               toggleConfirm={toggleConfirm}
               toDeletePost={toDeletePost}
               postPayload={postPayload}
-              key={post._id}
+              key={post.id}
               post={post}
             />
           ))}

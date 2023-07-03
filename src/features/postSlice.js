@@ -44,7 +44,7 @@ const postSlice = createSlice({
         ...state,
         // posts: [...state.posts, payload],
         posts: state.posts.map((post) => {
-          if (post._id === payload._id) return payload;
+          if (post.id === payload.id) return payload;
           return post;
         }),
         //arr.splice(index, 1, 'z');
@@ -56,7 +56,7 @@ const postSlice = createSlice({
     deletePost: (state, { payload }) => {
       return {
         ...state,
-        posts: state.posts.filter((post) => post._id !== payload),
+        posts: state.posts.filter((post) => post.id !== payload),
         post: null,
       };
     },
@@ -92,12 +92,13 @@ export const addPostAction = createAsyncThunk(
       },
     };
 
+    console.log(payload);
     try {
       const res = await axios.post('/api/posts/', payload, config);
+      console.log('from redux payload', payload);
       dispatch(addPost(res.data));
-      console.log(res);
+      // console.log(res);
     } catch (error) {
-      console.log(payload);
       console.log(error.message);
     }
   }
@@ -114,11 +115,9 @@ export const updatePostAction = createAsyncThunk(
     };
 
     try {
-      const res = await axios.put(`/api/posts/${payload._id}`, payload, config);
+      const res = await axios.put(`/api/posts/${payload.id}`, payload, config);
       dispatch(updatePost(res.data));
-      console.log(res);
     } catch (error) {
-      console.log(payload);
       console.log(error.message);
     }
   }
@@ -131,7 +130,7 @@ export const getPostAction = createAsyncThunk(
     try {
       const res = await axios.get(`/api/posts/${id}`);
       // console.log(res.data);
-      thunkApi.dispatch(getPost(res.data));
+      thunkApi.dispatch(getPost(res.data[0]));
     } catch (error) {
       console.error(error.message);
     }
@@ -141,13 +140,23 @@ export const getPostAction = createAsyncThunk(
 // Delete post
 export const deletePostAction = createAsyncThunk(
   'post/deletepost',
-  async ({ _id }, { dispatch }) => {
-    console.log(_id);
+  // async ({ id }, { dispatch }) => {
+  async (post, { dispatch }) => {
+    console.log(post.image);
+
+    // this is from Blog old version
+
+    // if (deletePostData.image !== undefined) {
+    //   const req = async () =>
+    //     console.log('we should delete this image' + deletePostData.image);
+    //   axios.delete(`/api/photo-blog/${deletePostData.image}`);
+    // } else {
+    //   console.log('could not find image');
+    // }
     try {
-      const res = await axios.delete(`/api/posts/${_id}`);
-      dispatch(deletePost(_id));
+      const res = await axios.delete(`/api/posts/${post.id}`, { data: post });
+      dispatch(deletePost(post.id));
     } catch (error) {
-      console.log(_id);
       console.error(error.message);
     }
   }
